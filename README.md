@@ -3,8 +3,9 @@
 
 ## Figure R1
 
-![Figure R1: Training instability with Projected GAN-style auxiliary discriminator](assets/vision_aided_discriminator_loss.jpg)
-**Figure R1. Training instability with Projected GAN-style auxiliary discriminator.** Training curves of GAT-XL/2 with and without a Vision-aided GAN-style auxiliary discriminator. The auxiliary discriminator, which applies frozen pretrained features to the final decoded pixel-space output, leads to rapid discriminator loss collapse and severe mode collapse, indicating the needs for careful tuning of discriminator to maintain training stability. Our REPA-style alignment achieves stable training without this instability. Note that, vision-aided discriminator is attached after warmup of 1M images, following the original implementaion.
+<!-- ![Figure R1: Training instability with Projected GAN-style auxiliary discriminator](assets/vision_aided_discriminator_loss.jpg) -->
+![Figure R1: Training instability with Projected GAN-style auxiliary discriminator](assets/comparison.jpg)
+**Figure R1. Training instability with Projected GAN-style auxiliary discriminator.** We decode the generator's final-stage latent output to pixel space via the frozen VAE decoder and attach a Vision-aided GAN-style auxiliary discriminator with frozen pretrained features. The auxiliary object drives the discriminator loss to near zero, eliminating useful gradient feedback and causing severe mode collapse (Recall goes to 0). This setup also incurs ~27× higher VRAM consumption due to per-step VAE decoding. Our REPA-style alignment leverages pretrained visual knowledge without this instability or overhead. The auxiliary discriminator is attached after a 1M-image warmup, following the original implementation.
 
 ---
 
@@ -47,7 +48,7 @@ Each row corresponds to a different scheduling scheme; exp-1/2 (our default, α 
 
 ---
 
-## Table R1
+## Table R1.
 
 |              | GAT-XL (60 epo) | GAT-XL (40 epo) | StyleGAN-XL | MeanFlow-XL |
 |:-------------|:----------------:|:----------------:|:-----------:|:-----------:|
@@ -64,12 +65,13 @@ Each row corresponds to a different scheduling scheme; exp-1/2 (our default, α 
 
 ---
 
-## Table R2
+## Table R2.
 
- | Config | Total Params | Total GFLOPs | FID-50K↓ |
-|:---|---:|---:|---:|
-| G-S / D-B | 143.97M | 58.22 | 11.45 |
-| G-B / D-S | 146.12M | 54.48 | 12.62 |
-| G-M / D-M | 132.43M | 52.69 | 11.47 |
+| Config    | G (C, heads) | D (C, heads) | Total Params | Total GFLOPs | FID-50K↓ |
+| :-------- | :----------: | :----------: | -----------: | -----------: | -------: |
+| G-S / D-B |   (384, 6)   |   (768, 12)  |      143.97M |        58.22 |    11.45 |
+| G-B / D-S |   (768, 12)  |   (384, 6)   |      146.12M |        54.48 |    12.62 |
+| G-M / D-M |   (576, 9)   |   (576, 9)   |      132.43M |        52.69 |    11.47 |
 
-**Table R2.** Scaling strategy comparison under matched compute budget. G-S/D-B and G-B/D-S use asymmetric generator–discriminator configurations; G-M/D-M uses a symmetric intermediate model (C=576, 9 heads). Total parameters and GFLOPs are within ~10% across all three configurations. FID-50K is measured at 50K training iterations on ImageNet 256².
+
+**Table R2.** Scaling strategy comparison under a matched compute budget. G-S/D-B and G-B/D-S use asymmetric generator-discriminator allocations, while G-M/D-M uses a symmetric intermediate model (C = 576, 9 heads). Total parameters and GFLOPs are matched within approximately 10% across all three configurations. FID-50K is reported at 50K training iterations on ImageNet-256. Notably, the symmetric G-M/D-M model achieves competitive FID relative to both asymmetric counterparts despite requiring slightly fewer total parameters and GFLOPs, suggesting that balanced scaling can be the most compute-efficient strategy under a fixed budget.
