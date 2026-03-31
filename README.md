@@ -47,7 +47,7 @@ Each row corresponds to a different scheduling scheme; exp-1/2 (our default, α 
 
 ---
 
-## Table R1.
+## Table R1
 
 |              | GAT-XL (60 epo) | GAT-XL (40 epo) | StyleGAN-XL | MeanFlow-XL |
 |:-------------|:----------------:|:----------------:|:-----------:|:-----------:|
@@ -64,7 +64,7 @@ Each row corresponds to a different scheduling scheme; exp-1/2 (our default, α 
 
 ---
 
-## Table R2.
+## Table R2
 
  | Config | Total Params | Total GFLOPs | FID-50K↓ |
 |:---|---:|---:|---:|
