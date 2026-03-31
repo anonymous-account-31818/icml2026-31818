@@ -34,6 +34,17 @@ Intermediate outputs from each generator stage (GAT-XL/2). Each row shows the ou
 **Figure R4. Comparison of noise schedules and their effect on generated images (GAT-S/2).** 
 Each row corresponds to a different scheduling scheme; exp-1/2 (our default, α = 0.125, 0.25, 0.5, 1.0), linear (α = 0.25, 0.5, 0.75, 1.0), and exp-1/3 (α ≈ 0.037, 0.111, 0.333, 1.0). For each row, the left panel shows the raw intermediate outputs at each stage, and the right panel shows the same outputs after applying the corresponding noise perturbation, illustrating what the discriminator actually observes during training. The exp-1/2 schedule achieves the best FID-50K (15.27 vs. 17.66 for exp-1/3 and 18.96 for linear), retaining sufficient clean signal in early stages for meaningful structural supervision while preserving clear stage-wise differentiation.
 
+
+---
+
+## Figure R5
+
+
+![Figure R5: large batch training](assets/large-batch-training.jpg) 
+**Figure R5. Training with large-batch training technique (GAT-S/2).** With the square root scaling rule between batch size and learning rate known for capatible with adam optimizer, the large-batch run reaches comparable FID in approximately 1/4 of the iterations, demonstrating that our width-aware LR transfer rule composes naturally with standard batch-size scaling.
+
+
+
 ---
 
 ## Table R1.
@@ -59,6 +70,6 @@ Each row corresponds to a different scheduling scheme; exp-1/2 (our default, α 
 |:---|---:|---:|---:|
 | G-S / D-B | 143.97M | 58.22 | 11.45 |
 | G-B / D-S | 146.12M | 54.48 | 12.62 |
-| G-M / D-M | 132.43M | 52.69 | |
+| G-M / D-M | 132.43M | 52.69 | 11.47 |
 
 **Table R2.** Scaling strategy comparison under matched compute budget. G-S/D-B and G-B/D-S use asymmetric generator–discriminator configurations; G-M/D-M uses a symmetric intermediate model (C=576, 9 heads). Total parameters and GFLOPs are within ~10% across all three configurations. FID-50K is measured at 50K training iterations on ImageNet 256².
