@@ -42,7 +42,7 @@ Each row corresponds to a different scheduling scheme; exp-1/2 (our default, α 
 
 
 ![Figure R5: large batch training](assets/large-batch-training.jpg) 
-**Figure R5. Training with large-batch training technique (GAT-S/2).** With the square root scaling rule between batch size and learning rate known for capatible with adam optimizer, the large-batch run reaches comparable FID in approximately 1/4 of the iterations, demonstrating that our width-aware LR transfer rule composes naturally with standard batch-size scaling.
+**Figure R5. Training with large-batch training technique (GAT-S/2).** We increase the batch size by 4x and scale the learning rate using the standard square-root batch-size scaling rule. Under this setting, the large-batch run reaches a comparable FID in roughly one-quarter of the training iterations, showing that our width-aware learning-rate transfer rule composes naturally with batch-size scaling.
 
 
 
